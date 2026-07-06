@@ -44,8 +44,10 @@ class RenderSliverCrossAxisPadded extends RenderSliver
   SliverCrossAxisPositionedData createCrossAxisPositionData(
     SliverConstraints constraints,
   ) {
-    assert(constraints.crossAxisExtent - paddingStart - paddingEnd > 0,
-        'The total padding exceeds the crossAxisExtent of this sliver');
+    assert(
+      constraints.crossAxisExtent - paddingStart - paddingEnd > 0,
+      'The total padding exceeds the crossAxisExtent of this sliver',
+    );
     final crossAxisExtent = max(
       0.0,
       constraints.crossAxisExtent - paddingStart - paddingEnd,
@@ -53,8 +55,9 @@ class RenderSliverCrossAxisPadded extends RenderSliver
     double crossAxisPosition;
     switch (constraints.axis) {
       case Axis.vertical:
-        crossAxisPosition =
-            textDirection == TextDirection.ltr ? paddingStart : paddingEnd;
+        crossAxisPosition = textDirection == TextDirection.ltr
+            ? paddingStart
+            : paddingEnd;
         break;
       case Axis.horizontal:
         crossAxisPosition = paddingStart;

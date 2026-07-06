@@ -25,27 +25,25 @@ class SliverAnimatedSwitcher extends StatelessWidget {
   final Curve switchOutCurve;
 
   const SliverAnimatedSwitcher({
-    Key? key,
+    super.key,
     required this.child,
     required this.duration,
     this.reverseDuration,
     this.switchInCurve = Curves.linear,
     this.switchOutCurve = Curves.linear,
-  }) : super(key: key);
+  });
 
   static Widget defaultLayoutBuilder(
-      Widget? currentChild, List<Widget> previousChildren) {
-    return SliverStack(
-      children: <Widget>[
-        ...previousChildren,
-        if (currentChild != null) currentChild,
-      ],
-    );
+    Widget? currentChild,
+    List<Widget> previousChildren,
+  ) {
+    return SliverStack(children: <Widget>[...previousChildren, ?currentChild]);
   }
 
   static Widget defaultTransitionBuilder(
-          Widget child, Animation<double> animation) =>
-      SliverFadeTransition(opacity: animation, sliver: child);
+    Widget child,
+    Animation<double> animation,
+  ) => SliverFadeTransition(opacity: animation, sliver: child);
 
   @override
   Widget build(BuildContext context) {

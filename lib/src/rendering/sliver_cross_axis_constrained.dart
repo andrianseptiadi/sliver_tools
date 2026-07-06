@@ -42,7 +42,8 @@ class RenderSliverCrossAxisConstrained extends RenderSliver
     );
     return SliverCrossAxisPositionedData(
       crossAxisExtent: crossAxisExtent,
-      crossAxisPosition: (alignment + 1) *
+      crossAxisPosition:
+          (alignment + 1) *
           ((constraints.crossAxisExtent - crossAxisExtent) / 2),
     );
   }
@@ -51,6 +52,7 @@ class RenderSliverCrossAxisConstrained extends RenderSliver
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-        DiagnosticsProperty<double>('maxCrossAxisExtent', maxCrossAxisExtent));
+      DiagnosticsProperty<double>('maxCrossAxisExtent', maxCrossAxisExtent),
+    );
   }
 }

@@ -36,10 +36,10 @@ class PinnedHeader extends StatelessWidget {
   final Key? boxKey;
 
   const PinnedHeader({
-    Key? key,
+    super.key,
     required this.size,
     this.boxKey,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

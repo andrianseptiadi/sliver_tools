@@ -94,8 +94,10 @@ class SliverStackParentData extends ParentData
 
 class RenderSliverStack extends RenderSliver
     with
-        ContainerRenderObjectMixin<RenderObject,
-            ContainerParentDataMixin<RenderObject>>,
+        ContainerRenderObjectMixin<
+          RenderObject,
+          ContainerParentDataMixin<RenderObject>
+        >,
         RenderSliverHelpers {
   /// The alignment to use on any positioned children that are only partially
   /// positioned
@@ -169,7 +171,9 @@ class RenderSliverStack extends RenderSliver
     }
 
     final axisDirection = applyGrowthDirectionToAxisDirection(
-        constraints.axisDirection, constraints.growthDirection);
+      constraints.axisDirection,
+      constraints.growthDirection,
+    );
     final double overlapAndScroll = insetOnOverlap
         ? max(0.0, constraints.overlap + constraints.scrollOffset)
         : 0;
@@ -194,7 +198,8 @@ class RenderSliverStack extends RenderSliver
       final childGeometry = child.geometry!;
       if (childGeometry.scrollOffsetCorrection != null) {
         geometry = SliverGeometry(
-            scrollOffsetCorrection: childGeometry.scrollOffsetCorrection);
+          scrollOffsetCorrection: childGeometry.scrollOffsetCorrection,
+        );
         return;
       }
       minPaintOrigin = min(
@@ -211,7 +216,8 @@ class RenderSliverStack extends RenderSliver
         childGeometry.maxScrollObstructionExtent,
       );
       maxCacheExtent = max(maxCacheExtent, childGeometry.cacheExtent);
-      hasVisualOverflow = hasVisualOverflow ||
+      hasVisualOverflow =
+          hasVisualOverflow ||
           childGeometry.hasVisualOverflow ||
           childGeometry.paintOrigin < 0;
       parentData.mainAxisPosition = 0;
@@ -258,18 +264,24 @@ class RenderSliverStack extends RenderSliver
     final size = constraints.axis == Axis.vertical
         ? Size(
             constraints.crossAxisExtent,
-            max(geometry!.maxPaintExtent - overlapAndScroll,
-                geometry!.paintExtent - overlap),
+            max(
+              geometry!.maxPaintExtent - overlapAndScroll,
+              geometry!.paintExtent - overlap,
+            ),
           )
         : Size(
-            max(geometry!.maxPaintExtent - overlapAndScroll,
-                geometry!.paintExtent - overlap),
+            max(
+              geometry!.maxPaintExtent - overlapAndScroll,
+              geometry!.paintExtent - overlap,
+            ),
             constraints.crossAxisExtent,
           );
     for (final child in _children.whereType<RenderBox>()) {
       final parentData = child.parentData as SliverStackParentData;
-      assert(parentData.isPositioned,
-          'All non sliver children of SliverStack should be positioned');
+      assert(
+        parentData.isPositioned,
+        'All non sliver children of SliverStack should be positioned',
+      );
       if (!parentData.isPositioned) return;
       child.parentData = parentData._simpleStackParentData;
       final overflows = RenderStack.layoutPositionedChild(
@@ -285,11 +297,14 @@ class RenderSliverStack extends RenderSliver
           parentData.paintOffset = Offset(
             parentData.paintOffset.dx,
             -geometry!.maxPaintExtent +
-                min(geometry!.maxPaintExtent,
-                    geometry!.paintExtent + constraints.scrollOffset) +
+                min(
+                  geometry!.maxPaintExtent,
+                  geometry!.paintExtent + constraints.scrollOffset,
+                ) +
                 parentData.paintOffset.dy,
           );
-          parentData.mainAxisPosition = geometry!.paintExtent -
+          parentData.mainAxisPosition =
+              geometry!.paintExtent -
               parentData.paintOffset.dy -
               child.size.height;
           parentData.crossAxisPosition = parentData.paintOffset.dx;
@@ -308,12 +323,16 @@ class RenderSliverStack extends RenderSliver
           break;
         case AxisDirection.left:
           parentData.paintOffset = Offset(
-              -geometry!.maxPaintExtent +
-                  min(geometry!.maxPaintExtent,
-                      geometry!.paintExtent + constraints.scrollOffset) +
-                  parentData.paintOffset.dx,
-              parentData.paintOffset.dy);
-          parentData.mainAxisPosition = geometry!.paintExtent -
+            -geometry!.maxPaintExtent +
+                min(
+                  geometry!.maxPaintExtent,
+                  geometry!.paintExtent + constraints.scrollOffset,
+                ) +
+                parentData.paintOffset.dx,
+            parentData.paintOffset.dy,
+          );
+          parentData.mainAxisPosition =
+              geometry!.paintExtent -
               parentData.paintOffset.dx -
               child.size.width;
           parentData.crossAxisPosition = parentData.paintOffset.dy;
@@ -340,12 +359,19 @@ class RenderSliverStack extends RenderSliver
     if (child is RenderSliver && child.geometry!.visible ||
         child is RenderBox) {
       final parentData = child.parentData as SliverStackParentData;
-      transform.translate(parentData.paintOffset.dx, parentData.paintOffset.dy);
+      transform.translateByDouble(
+        parentData.paintOffset.dx,
+        parentData.paintOffset.dy,
+        0,
+        1,
+      );
     }
   }
 
   double _computeChildMainAxisPosition(
-      RenderObject child, double parentMainAxisPosition) {
+    RenderObject child,
+    double parentMainAxisPosition,
+  ) {
     final childParentData = child.parentData as SliverStackParentData;
     return parentMainAxisPosition - childParentData.mainAxisPosition;
   }
@@ -373,15 +399,20 @@ class RenderSliverStack extends RenderSliver
       if (child is RenderSliver && child.geometry!.visible) {
         final hit = child.hitTest(
           result,
-          mainAxisPosition:
-              _computeChildMainAxisPosition(child, mainAxisPosition),
+          mainAxisPosition: _computeChildMainAxisPosition(
+            child,
+            mainAxisPosition,
+          ),
           crossAxisPosition: crossAxisPosition,
         );
         if (hit) return true;
       } else if (child is RenderBox) {
-        hitTestBoxChild(boxResult, child,
-            mainAxisPosition: mainAxisPosition,
-            crossAxisPosition: crossAxisPosition);
+        hitTestBoxChild(
+          boxResult,
+          child,
+          mainAxisPosition: mainAxisPosition,
+          crossAxisPosition: crossAxisPosition,
+        );
       }
     }
     return false;

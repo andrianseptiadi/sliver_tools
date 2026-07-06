@@ -46,12 +46,16 @@ mixin RenderSliverCrossAxisPositionedMixin
     childParentData.crossAxisPosition = positionData.crossAxisPosition;
     switch (constraints.axis) {
       case Axis.vertical:
-        childParentData.paintOffset =
-            Offset(positionData.crossAxisPosition, 0.0);
+        childParentData.paintOffset = Offset(
+          positionData.crossAxisPosition,
+          0.0,
+        );
         break;
       case Axis.horizontal:
-        childParentData.paintOffset =
-            Offset(0.0, positionData.crossAxisPosition);
+        childParentData.paintOffset = Offset(
+          0.0,
+          positionData.crossAxisPosition,
+        );
         break;
     }
   }
@@ -62,8 +66,11 @@ mixin RenderSliverCrossAxisPositionedMixin
   );
 
   @override
-  bool hitTestChildren(SliverHitTestResult result,
-      {required double mainAxisPosition, required double crossAxisPosition}) {
+  bool hitTestChildren(
+    SliverHitTestResult result, {
+    required double mainAxisPosition,
+    required double crossAxisPosition,
+  }) {
     if (child == null) return false;
     final childParentData =
         child!.parentData as _SliverCrossAxisPositionedParentData;

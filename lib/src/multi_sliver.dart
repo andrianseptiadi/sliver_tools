@@ -7,10 +7,10 @@ class MultiSliver extends MultiChildRenderObjectWidget {
   // flutter pre 3.13 does not allow the constructor to be const
   // ignore: prefer_const_constructors_in_immutables
   MultiSliver({
-    Key? key,
-    required List<Widget> children,
+    super.key,
+    required super.children,
     this.pushPinnedChildren = false,
-  }) : super(key: key, children: children);
+  });
 
   /// If true any children that paint beyond the layoutExtent of the entire [MultiSliver] will
   /// be pushed off towards the leading edge of the [Viewport]
@@ -18,13 +18,13 @@ class MultiSliver extends MultiChildRenderObjectWidget {
 
   @override
   RenderMultiSliver createRenderObject(BuildContext context) =>
-      RenderMultiSliver(
-        containing: pushPinnedChildren,
-      );
+      RenderMultiSliver(containing: pushPinnedChildren);
 
   @override
   void updateRenderObject(
-      BuildContext context, covariant RenderMultiSliver renderObject) {
+    BuildContext context,
+    covariant RenderMultiSliver renderObject,
+  ) {
     renderObject.containing = pushPinnedChildren;
   }
 }

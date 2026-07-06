@@ -2,9 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
 class RenderSliverClip extends RenderProxySliver {
-  RenderSliverClip({
-    required bool clipOverlap,
-  }) : _clipOverlap = clipOverlap;
+  RenderSliverClip({required bool clipOverlap}) : _clipOverlap = clipOverlap;
 
   bool _clipOverlap;
 
@@ -24,7 +22,9 @@ class RenderSliverClip extends RenderProxySliver {
 
   Rect calculateClipRect() {
     final axisDirection = applyGrowthDirectionToAxisDirection(
-        constraints.axisDirection, constraints.growthDirection);
+      constraints.axisDirection,
+      constraints.growthDirection,
+    );
     Rect rect;
     final double overlapCorrection = (clipOverlap ? constraints.overlap : 0);
     switch (axisDirection) {
@@ -65,8 +65,11 @@ class RenderSliverClip extends RenderProxySliver {
   }
 
   @override
-  bool hitTestChildren(SliverHitTestResult result,
-      {required double mainAxisPosition, required double crossAxisPosition}) {
+  bool hitTestChildren(
+    SliverHitTestResult result, {
+    required double mainAxisPosition,
+    required double crossAxisPosition,
+  }) {
     final double overlapCorrection = (clipOverlap ? constraints.overlap : 0);
     return child != null &&
         clipRect != null &&

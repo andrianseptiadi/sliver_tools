@@ -14,11 +14,11 @@ class SliverAnimatedPaintExtent extends StatefulWidget {
   final Widget child;
 
   const SliverAnimatedPaintExtent({
-    Key? key,
+    super.key,
     required this.duration,
     required this.child,
     this.curve = Curves.linear,
-  }) : super(key: key);
+  });
 
   @override
   State<SliverAnimatedPaintExtent> createState() =>
@@ -63,12 +63,11 @@ class _SliverAnimatedPaintExtent extends SingleChildRenderObjectWidget {
   final Curve curve;
 
   const _SliverAnimatedPaintExtent({
-    Key? key,
     required this.controller,
     required this.duration,
     required this.curve,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required Widget super.child,
+  });
 
   @override
   RenderSliverAnimatedPaintExtent createRenderObject(BuildContext context) {
@@ -79,8 +78,10 @@ class _SliverAnimatedPaintExtent extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context,
-      covariant RenderSliverAnimatedPaintExtent renderObject) {
+  void updateRenderObject(
+    BuildContext context,
+    covariant RenderSliverAnimatedPaintExtent renderObject,
+  ) {
     renderObject
       ..duration = duration
       ..controller = controller

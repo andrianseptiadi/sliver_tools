@@ -6,10 +6,10 @@ import 'rendering/sliver_clip.dart';
 /// Also clips off any overlap if [clipOverlap] is `true`
 class SliverClip extends SingleChildRenderObjectWidget {
   const SliverClip({
-    Key? key,
-    required Widget child,
+    super.key,
+    required Widget super.child,
     this.clipOverlap = true,
-  }) : super(key: key, child: child);
+  });
 
   /// Whether or not any overlap with previous slivers should be clipped
   /// default value is `true`
@@ -22,7 +22,9 @@ class SliverClip extends SingleChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, covariant RenderSliverClip renderObject) {
+    BuildContext context,
+    covariant RenderSliverClip renderObject,
+  ) {
     renderObject.clipOverlap = clipOverlap;
   }
 }
